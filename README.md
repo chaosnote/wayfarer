@@ -5,6 +5,8 @@
 ## CMD
 
 ``` shell
+刪除快取
+flutter clean
 更新相依性
 flutter pub get
 
