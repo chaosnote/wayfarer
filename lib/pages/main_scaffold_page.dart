@@ -50,7 +50,7 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
           BottomNavigationBarItem(icon: Icon(Icons.phone), label: 'Phone'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Line'),
           BottomNavigationBarItem(icon: Icon(Icons.perm_device_information), label: '狀態'),
-          BottomNavigationBarItem(icon: Icon(Icons.apps), label: '軟體'),
+          BottomNavigationBarItem(icon: Icon(Icons.apps), label: 'APP'),
         ],
       ),
     );

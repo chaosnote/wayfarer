@@ -103,7 +103,7 @@ class _LaunchAppPageState extends State<LaunchAppPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('啟動軟體')),
+      appBar: AppBar(title: const Text('常用 APP')),
       body: ListView(
         children: [
           _buildAppTile(title: 'Line', packageName: AppPackages.line, icon: Icons.chat, iconColor: Colors.green),
