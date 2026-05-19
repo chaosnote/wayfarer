@@ -67,5 +67,7 @@
         <package android:name="jp.naver.line.android" />
         <package android:name="com.facebook.katana" />
         <package android:name="com.google.android.youtube" />
+        <package android:name="com.secom.trashpass" />
+        <package android:name="tw.skyeyes.yunlincar" />
     </queries>
 </manifest>
