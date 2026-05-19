@@ -1,6 +1,6 @@
 # wayfarer
 
-A new Flutter project.
+長輩輔助工具、老人家常用的軟體，方便協助安裝。
 
 ## CMD
 
