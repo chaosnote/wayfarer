@@ -1,4 +1,4 @@
-# test_nav
+# wayfarer
 
 A new Flutter project.
 

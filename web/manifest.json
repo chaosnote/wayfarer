@@ -1,6 +1,6 @@
 {
-    "name": "test_nav",
-    "short_name": "test_nav",
+    "name": "wayfarer",
+    "short_name": "wayfarer",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

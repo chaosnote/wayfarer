@@ -1,4 +1,4 @@
-package com.example.test_nav
+package com.example.wayfarer
 
 import android.content.Context
 import android.media.AudioManager
@@ -9,7 +9,7 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity: FlutterActivity() {
     // 這裡的 Channel 名稱必須與 Dart 裡面寫的一模一樣
-    private val CHANNEL = "com.example.test_nav/volume"
+    private val CHANNEL = "com.example.wayfarer/volume"
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
