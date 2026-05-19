@@ -34,6 +34,11 @@ android {
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
+            
+            // 重新啟用程式碼混淆與資源縮減 (搭配 keep.xml 保留通知圖示)
+            isMinifyEnabled = true
+            isShrinkResources = true
+
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
