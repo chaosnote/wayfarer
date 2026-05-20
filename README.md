@@ -4,12 +4,26 @@
 
 ## CMD
 
-``` shell
+``` flutter
 刪除快取
 flutter clean
+
 更新相依性
 flutter pub get
 
+查詢裝置
+flutter devices
+
+指定測試
+flutter run -d (ID)
+輸出 Log
+flutter logs -d (ID)
+
+
+flutter run -d all
+```
+
+``` shell
 編譯前測試
 flutter run --release
 
