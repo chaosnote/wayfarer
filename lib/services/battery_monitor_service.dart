@@ -91,18 +91,17 @@ class BatteryMonitorService {
       debugPrint("[BatteryMonitorService] 🚨 通知套件初始化失敗: $e");
     }
 
-    // 2. 初始化並啟動 Android 背景前景服務
+    // 2. 先請求通知權限 (Android 13+ 必須有通知權限，才能啟動需要常駐通知的前景服務)
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      debugPrint("[BatteryMonitorService] 準備請求通知權限...");
+      await _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+    }
+
+    // 3. 取得權限後，再初始化並啟動 Android 背景前景服務
     debugPrint("[BatteryMonitorService] 準備啟動真背景服務...");
     await _initBackgroundService();
-
-    // 3. 延遲請求通知權限，確保主畫面已經渲染完成，避免啟動時找不到 Activity 而卡死
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      Future.delayed(const Duration(seconds: 2), () async {
-        await _flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-            ?.requestNotificationsPermission();
-      });
-    }
   }
 
   Future<void> _initBackgroundService() async {
