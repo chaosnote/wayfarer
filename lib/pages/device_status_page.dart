@@ -18,7 +18,7 @@ class DeviceStatusPage extends StatefulWidget {
 class _DeviceStatusPageState extends State<DeviceStatusPage> with WidgetsBindingObserver {
   // === 聲音控制 ===
   bool _isSoundOn = true;
-  static const platform = MethodChannel('com.example.wayfarer/volume');
+  static const platform = MethodChannel('wayfarer/volume');
 
   // === 電池狀態 ===
   final Battery _battery = Battery();

@@ -9,33 +9,32 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity: FlutterActivity() {
-    // 這裡的 Channel 名稱必須與 Dart 裡面寫的一模一樣
-    private val CHANNEL = "com.example.wayfarer/volume"
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "wayfarer/volume").setMethodCallHandler { call, result ->
             // 判斷 Dart 傳過來的方法名稱
-            if (call.method == "setVolume") {
-                val isSoundOn = call.argument<Boolean>("isSoundOn") ?: true
-                val success = setSystemVolume(isSoundOn)
-                
-                if (success) {
-                    result.success(null) // 執行成功回報給 Dart
-                } else {
-                    result.error("UNAVAILABLE", "音量控制失敗", null)
+            when (call.method) {
+                "setVolume" -> {
+                    val isSoundOn = call.argument<Boolean>("isSoundOn") ?: true
+                    val success = setSystemVolume(isSoundOn)
+                    if (success) {
+                        result.success(null) // 執行成功回報給 Dart
+                    } else {
+                        result.error("UNAVAILABLE", "音量控制失敗", null)
+                    }
                 }
-            } else if (call.method == "getVolume") {
-                val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-                val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-                result.success(currentVolume) // 將取得的音量整數回傳給 Dart
-            } else {
-                result.notImplemented()
+                "getVolume" -> {
+                    val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                    val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                    result.success(currentVolume) // 將取得的音量整數回傳給 Dart
+                }
+                else -> result.notImplemented()
             }
         }
 
-        // 新增：處理啟動其他 APP 的 MethodChannel
+        // 處理啟動其他 APP 的 MethodChannel
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "wayfarer/app_launcher").setMethodCallHandler { call, result ->
             val packageName = call.argument<String>("packageName")
             when (call.method) {
