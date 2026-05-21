@@ -1,6 +1,7 @@
 package com.example.wayfarer
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.media.AudioManager
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
@@ -31,6 +32,39 @@ class MainActivity: FlutterActivity() {
                 result.success(currentVolume) // 將取得的音量整數回傳給 Dart
             } else {
                 result.notImplemented()
+            }
+        }
+
+        // 新增：處理啟動其他 APP 的 MethodChannel
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "wayfarer/app_launcher").setMethodCallHandler { call, result ->
+            val packageName = call.argument<String>("packageName")
+            when (call.method) {
+                "isAppInstalled" -> {
+                    if (packageName != null) {
+                        try {
+                            packageManager.getPackageInfo(packageName, 0)
+                            result.success(true)
+                        } catch (e: PackageManager.NameNotFoundException) {
+                            result.success(false)
+                        }
+                    } else {
+                        result.success(false)
+                    }
+                }
+                "launchApp" -> {
+                    if (packageName != null) {
+                        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+                        if (launchIntent != null) {
+                            startActivity(launchIntent)
+                            result.success(true)
+                        } else {
+                            result.error("APP_NOT_FOUND", "無法找到 APP 的啟動畫面", null)
+                        }
+                    } else {
+                        result.error("INVALID_ARGS", "Package Name 為 null", null)
+                    }
+                }
+                else -> result.notImplemented()
             }
         }
     }

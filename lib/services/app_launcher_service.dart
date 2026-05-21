@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
-import 'package:android_intent_plus/android_intent.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform, debugPrint;
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// 處理 App 相關互動（例如在 Android 上檢查安裝狀態與啟動應用程式）的服務。
 class AppLauncherService {
@@ -8,19 +9,23 @@ class AppLauncherService {
   factory AppLauncherService() => _instance;
   AppLauncherService._internal();
 
+  // 建立與 Android 原生溝通的通道
+  static const MethodChannel _channel = MethodChannel('wayfarer/app_launcher');
+
   /// 透過 package name 檢查特定 App 是否已安裝。
   /// 在非 Android 平台上回傳 `false`。
   Future<bool> isAppInstalled(String packageName) async {
     if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) {
       return false;
     }
-    final AndroidIntent intent = AndroidIntent(
-      action: 'action_main',
-      category: 'android.intent.category.LAUNCHER',
-      package: packageName,
-    );
-    // canResolveActivity() 檢查是否有 activity 能處理此 intent。
-    return await intent.canResolveActivity() ?? false;
+    try {
+      // 呼叫原生層的檢查方法
+      final bool result = await _channel.invokeMethod('isAppInstalled', {'packageName': packageName});
+      return result;
+    } catch (e) {
+      debugPrint('檢查安裝狀態失敗: $e');
+      return false;
+    }
   }
 
   /// 平行檢查多個 App 的安裝狀態。
@@ -48,15 +53,32 @@ class AppLauncherService {
     }
 
     if (await isAppInstalled(packageName)) {
-      final AndroidIntent launchIntent = AndroidIntent(
-        action: 'action_main',
-        category: 'android.intent.category.LAUNCHER',
-        package: packageName,
-      );
-      await launchIntent.launch();
+      try {
+        // 呼叫原生層最標準的 getLaunchIntentForPackage 來啟動
+        await _channel.invokeMethod('launchApp', {'packageName': packageName});
+      } catch (e) {
+        debugPrint('啟動 APP 失敗: $e');
+        await _launchStore(packageName);
+      }
     } else {
-      final AndroidIntent storeIntent = AndroidIntent(action: 'action_view', data: 'market://details?id=$packageName');
-      await storeIntent.launch();
+      await _launchStore(packageName);
+    }
+  }
+
+  // 統一使用 url_launcher 開啟商店，支援度與穩定性更好
+  Future<void> _launchStore(String packageName) async {
+    final Uri marketUri = Uri.parse('market://details?id=$packageName');
+    final Uri webUri = Uri.parse('https://play.google.com/store/apps/details?id=$packageName');
+
+    try {
+      // 優先嘗試用商店協議打開，若無 Play 商店則用網頁瀏覽器打開
+      if (await canLaunchUrl(marketUri)) {
+        await launchUrl(marketUri, mode: LaunchMode.externalApplication);
+      } else {
+        await launchUrl(webUri, mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      debugPrint('開啟商店失敗: $e');
     }
   }
 }
