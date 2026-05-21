@@ -231,9 +231,9 @@ class _DeviceStatusPageState extends State<DeviceStatusPage> with WidgetsBinding
         child: Row(
           children: [
             Icon(
-              _batteryLevel > 20 ? Icons.battery_full : Icons.battery_alert,
+              _batteryLevel > AppParams.batteryAlertLimit ? Icons.battery_full : Icons.battery_alert,
               size: 36,
-              color: _batteryLevel > 20 ? Colors.green : Colors.red,
+              color: _batteryLevel > AppParams.batteryAlertLimit ? Colors.green : Colors.red,
             ),
             const SizedBox(width: 16),
             Text('$_batteryLevel%', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
