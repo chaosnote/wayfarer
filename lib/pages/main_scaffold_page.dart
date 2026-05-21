@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'line_contacts_page.dart';
 import 'phone_contacts_page.dart';
-import 'launch_app_page.dart';
+import 'other_func_page.dart';
 import 'device_status_page.dart';
 import '../services/battery_monitor_service.dart';
 
@@ -19,7 +19,7 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
     PhoneContactsPage(),
     LineContactsPage(),
     DeviceStatusPage(),
-    LaunchAppPage(), // 加入新建立的啟動軟體頁面
+    OtherFuncPage(), // 取代為其他次要功能頁面
   ];
 
   @override
