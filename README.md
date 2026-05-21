@@ -5,6 +5,8 @@
 ## CMD
 
 ``` flutter
+flutter doctor
+
 刪除快取
 flutter clean
 
@@ -19,8 +21,14 @@ flutter run -d (ID)
 輸出 Log
 flutter logs -d (ID)
 
-
 flutter run -d all
+```
+
+``` adb
+adb kill-server
+adb start-server
+
+adb connect ip:port
 ```
 
 ``` shell
