@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'launch_app_page.dart';
+import 'json_list_viewer_page.dart';
 
 class OtherFuncPage extends StatelessWidget {
   const OtherFuncPage({super.key});
@@ -24,7 +25,19 @@ class OtherFuncPage extends StatelessWidget {
               },
             ),
           ),
-          // TODO: 未來可以在這裡繼續加入其他的 Card 作為新的次功能入口
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: ListTile(
+              leading: const Icon(Icons.data_object, size: 36, color: Colors.purple),
+              title: const Text('本地 JSON 檢視', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              subtitle: const Text('選取本地檔案並顯示 JSON 清單', style: TextStyle(fontSize: 16)),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const JsonListViewerPage()));
+              },
+            ),
+          ),
         ],
       ),
     );
