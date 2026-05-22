@@ -112,7 +112,7 @@ class BatteryMonitorService {
         isForegroundMode: true, // 開啟前景模式，這會產生一個無法滑掉的常駐通知，確保系統絕不殺死 App
         notificationChannelId: 'battery_monitor_service_channel', // 修改為上方新建立的常駐服務專用頻道
         initialNotificationTitle: '電量安全監控中',
-        initialNotificationContent: '系統正在背景每 5 分鐘檢查一次電量',
+        initialNotificationContent: '系統正在背景每 ${AppParams.batteryDurationCheck} 分鐘檢查一次電量',
         foregroundServiceNotificationId: 888,
       ),
       iosConfiguration: IosConfiguration(autoStart: true, onForeground: onStart),

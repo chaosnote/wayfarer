@@ -1,6 +1,6 @@
 class AppParams {
+  AppParams._();
   // 電池低電量警告門檻，預設為 30%
-  // 將此數值獨立出來，方便未來其它頁面或全域邏輯共用
   static int batteryAlertLimit = 30;
   // 間隔多少分鐘驗證
   static const int batteryDurationCheck = 5;
