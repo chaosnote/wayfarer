@@ -133,6 +133,7 @@ class _DeviceStatusPageState extends State<DeviceStatusPage> with WidgetsBinding
   }
 
   bool get _isWifiConnected => _connectionStatus.contains(ConnectivityResult.wifi);
+  bool get _isMobileConnected => _connectionStatus.contains(ConnectivityResult.mobile);
 
   Future<void> _openWifiSettings() async {
     // 平台防呆機制
@@ -176,6 +177,26 @@ class _DeviceStatusPageState extends State<DeviceStatusPage> with WidgetsBinding
     }
   }
 
+  Future<void> _openMobileSettings() async {
+    // 平台防呆機制
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('此功能僅支援 Android 設備')));
+      }
+      return;
+    }
+
+    // 呼叫 Android 原生的行動網路/電信業者設定頁面
+    const AndroidIntent intent = AndroidIntent(action: 'android.settings.NETWORK_OPERATOR_SETTINGS');
+    try {
+      await intent.launch();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('無法開啟行動網路設定: $e')));
+      }
+    }
+  }
+
   // --- 畫面構建 ---
   @override
   Widget build(BuildContext context) {
@@ -197,6 +218,8 @@ class _DeviceStatusPageState extends State<DeviceStatusPage> with WidgetsBinding
               _buildBatteryCard(),
               const SizedBox(height: 16),
               _buildWifiCard(),
+              const SizedBox(height: 16),
+              _buildMobileCard(),
               const SizedBox(height: 16),
               _buildBluetoothCard(),
             ],
@@ -262,6 +285,27 @@ class _DeviceStatusPageState extends State<DeviceStatusPage> with WidgetsBinding
         subtitle: const Text('點擊前往 WiFi 設定'),
         trailing: const Icon(Icons.arrow_forward_ios),
         onTap: _openWifiSettings,
+      ),
+    );
+  }
+
+  Widget _buildMobileCard() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        leading: Icon(
+          _isMobileConnected ? Icons.cell_tower : Icons.signal_cellular_off,
+          size: 36,
+          color: _isMobileConnected ? Colors.green : Colors.grey,
+        ),
+        title: Text(
+          _isMobileConnected ? '行動網路 已連線' : '行動網路 未連線',
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        subtitle: const Text('點擊前往行動網路設定'),
+        trailing: const Icon(Icons.arrow_forward_ios),
+        onTap: _openMobileSettings,
       ),
     );
   }
