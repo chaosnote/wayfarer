@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'launch_app_page.dart';
 import 'json_list_viewer_page.dart';
+import 'media_page.dart';
 
 class OtherFuncPage extends StatelessWidget {
   const OtherFuncPage({super.key});
@@ -22,6 +23,19 @@ class OtherFuncPage extends StatelessWidget {
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const LaunchAppPage()));
+              },
+            ),
+          ),
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: ListTile(
+              leading: const Icon(Icons.mic, size: 36, color: Colors.green),
+              title: const Text('錄音與播放', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              subtitle: const Text('使用麥克風錄製音訊並播放', style: TextStyle(fontSize: 16)),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MediaPage()));
               },
             ),
           ),
