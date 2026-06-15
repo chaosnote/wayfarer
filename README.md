@@ -42,9 +42,8 @@ flutter build apk --release
 ## 功能
 
 <div style="display: flex; overflow-x: auto; gap: 10px; white-space: nowrap; padding-bottom: 10px;">
-  <img src="./doc/imgs/26037_0.jpg" height="400" alt="功能圖片 1" />
-  <img src="./doc/imgs/26036_0.jpg" height="400" alt="功能圖片 2" />
-  <img src="./doc/imgs/26035_0.jpg" height="400" alt="功能圖片 3" />
-  <img src="./doc/imgs/26034_0.jpg" height="400" alt="功能圖片 4" />
-  <img src="./doc/imgs/26033_0.jpg" height="400" alt="功能圖片 5" />
+  <img src="./doc/imgs/26598_0.jpg" height="400" alt="功能圖片 1" />
+  <img src="./doc/imgs/26598_0.jpg" height="400" alt="功能圖片 2" />
+  <img src="./doc/imgs/26597_0.jpg" height="400" alt="功能圖片 3" />
+  <img src="./doc/imgs/26596_0.jpg" height="400" alt="功能圖片 4" />
 </div>
