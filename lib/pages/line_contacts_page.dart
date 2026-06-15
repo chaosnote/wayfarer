@@ -188,7 +188,6 @@ class _LineContactsPageState extends State<LineContactsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Line 聯絡人', style: TextStyle(fontSize: 28))),
       body: _contacts.isEmpty
           ? const Center(child: Text('目前沒有聯絡人，請點擊右下角新增'))
           : ListView.builder(
@@ -217,7 +216,12 @@ class _LineContactsPageState extends State<LineContactsPage> {
                 );
               },
             ),
-      floatingActionButton: FloatingActionButton(onPressed: _showAddContactDialog, child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'addLineContact',
+        onPressed: _showAddContactDialog,
+        tooltip: '新增 Line 聯絡人',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

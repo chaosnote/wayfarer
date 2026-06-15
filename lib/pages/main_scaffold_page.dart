@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'line_contacts_page.dart';
-import 'phone_contacts_page.dart';
+import 'contacts_main_page.dart';
 import 'other_func_page.dart';
 import 'device_status_page.dart';
 import '../services/battery_monitor_service.dart';
@@ -16,8 +15,7 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = const [
-    PhoneContactsPage(),
-    LineContactsPage(),
+    ContactsMainPage(), // 換成整合後的聯絡人主頁
     DeviceStatusPage(),
     OtherFuncPage(), // 取代為其他次要功能頁面
   ];
@@ -47,8 +45,7 @@ class _MainScaffoldPageState extends State<MainScaffoldPage> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.phone), label: 'Phone'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Line'),
+          BottomNavigationBarItem(icon: Icon(Icons.contacts), label: '聯絡人'),
           BottomNavigationBarItem(icon: Icon(Icons.perm_device_information), label: '狀態'),
           BottomNavigationBarItem(icon: Icon(Icons.apps), label: 'More'),
         ],

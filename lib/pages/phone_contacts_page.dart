@@ -160,16 +160,6 @@ class _PhoneContactsPageState extends State<PhoneContactsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Phone 聯絡人', style: TextStyle(fontSize: 28)),
-        actions: [
-          IconButton(
-            onPressed: _importContact,
-            icon: const Icon(Icons.contact_phone, size: 36), // 在這裡設定 size 屬性來放大圖示
-            tooltip: '從電話簿匯入',
-          ),
-        ],
-      ),
       body: _contacts.isEmpty
           ? const Center(child: Text('目前沒有聯絡人，請點擊右下角新增'))
           : ListView.builder(
@@ -193,7 +183,24 @@ class _PhoneContactsPageState extends State<PhoneContactsPage> {
                 );
               },
             ),
-      floatingActionButton: FloatingActionButton(onPressed: _showAddContactDialog, child: const Icon(Icons.add)),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: 'importPhoneContact',
+            onPressed: _importContact,
+            tooltip: '從電話簿匯入',
+            child: const Icon(Icons.contact_phone),
+          ),
+          const SizedBox(height: 16),
+          FloatingActionButton(
+            heroTag: 'addPhoneContact',
+            onPressed: _showAddContactDialog,
+            tooltip: '手動新增',
+            child: const Icon(Icons.add),
+          ),
+        ],
+      ),
     );
   }
 }
