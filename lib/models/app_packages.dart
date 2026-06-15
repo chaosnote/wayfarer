@@ -6,5 +6,4 @@ class AppPackages {
   static const String facebook = 'com.facebook.katana';
   static const String youtube = 'com.google.android.youtube';
   static const String trashPass = 'com.secom.trashpass';
-  static const String yunlinCar = 'tw.skyeyes.yunlincar';
 }

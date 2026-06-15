@@ -34,18 +34,11 @@ class _LaunchAppPageState extends State<LaunchAppPage> {
         _installedStatus[AppPackages.facebook] = false;
         _installedStatus[AppPackages.youtube] = false;
         _installedStatus[AppPackages.trashPass] = false;
-        _installedStatus[AppPackages.yunlinCar] = false;
       });
       return;
     }
 
-    final packages = [
-      AppPackages.line,
-      AppPackages.facebook,
-      AppPackages.youtube,
-      AppPackages.trashPass,
-      AppPackages.yunlinCar,
-    ];
+    final packages = [AppPackages.line, AppPackages.facebook, AppPackages.youtube, AppPackages.trashPass];
     final statuses = await _launcherService.checkInstallationStatus(packages);
 
     if (mounted) {
@@ -124,12 +117,6 @@ class _LaunchAppPageState extends State<LaunchAppPage> {
             packageName: AppPackages.trashPass,
             icon: Icons.recycling,
             iconColor: Colors.orange,
-          ),
-          _buildAppTile(
-            title: '雲林垃圾清運',
-            packageName: AppPackages.yunlinCar,
-            icon: Icons.recycling,
-            iconColor: Colors.purple,
           ),
         ],
       ),
