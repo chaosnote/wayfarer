@@ -65,27 +65,32 @@ class _LineContactsPageState extends State<LineContactsPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('新增 Line 聯絡人'),
+          title: const Text('新增 Line 聯絡人', style: TextStyle(fontSize: 24)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(labelText: '名稱'),
+                style: const TextStyle(fontSize: 20),
+                decoration: const InputDecoration(labelText: '名稱', labelStyle: TextStyle(fontSize: 20)),
               ),
+              const SizedBox(height: 16),
               TextField(
                 controller: lineIdController,
+                style: const TextStyle(fontSize: 20),
                 decoration: InputDecoration(
                   labelText: 'Line 專屬連結',
+                  labelStyle: const TextStyle(fontSize: 20),
                   hintText: '例如: https://line.me/ti/p/...',
+                  hintStyle: const TextStyle(fontSize: 16),
                   suffixIcon: IconButton(
-                    icon: const Icon(Icons.help_outline),
+                    icon: const Icon(Icons.help_outline, size: 28),
                     tooltip: '如何取得連結？',
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                          title: const Text('如何取得 Line 專屬連結？'),
+                          title: const Text('如何取得 Line 專屬連結？', style: TextStyle(fontSize: 22)),
                           content: const SingleChildScrollView(
                             child: Text(
                               '請對方依照以下步驟操作，並將複製好的連結傳給您：\n\n'
@@ -94,9 +99,15 @@ class _LineContactsPageState extends State<LineContactsPage> {
                               '3. 點擊「個人檔案」。\n'
                               '4. 點擊「顯示行動條碼」。\n'
                               '5. 點擊「複製連結」。',
+                              style: TextStyle(fontSize: 18),
                             ),
                           ),
-                          actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('我知道了'))],
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(ctx),
+                              child: const Text('我知道了', style: TextStyle(fontSize: 18)),
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -106,7 +117,10 @@ class _LineContactsPageState extends State<LineContactsPage> {
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('取消')),
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('取消', style: TextStyle(fontSize: 18)),
+            ),
             TextButton(
               onPressed: () {
                 final String name = nameController.text.trim();
@@ -131,7 +145,7 @@ class _LineContactsPageState extends State<LineContactsPage> {
                 _saveContacts();
                 Navigator.pop(context);
               },
-              child: const Text('新增'),
+              child: const Text('新增', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
           ],
         );
